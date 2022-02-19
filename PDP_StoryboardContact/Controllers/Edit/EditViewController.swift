@@ -28,11 +28,20 @@ class EditViewController: BaseViewController {
     typealias completion = (Bool)->Void
     var editCompletion:completion!
     
+    var viewModel = EditViewModel()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
         initViews()
         hideKeyboardWhenTappedAround()
+    }
+    
+    func bindViewModel() {
+        viewModel.controller = self
+        viewModel.editContact(contact: singleContact, handler: { contact in
+            //action...
+        })
     }
 
 
@@ -54,22 +63,13 @@ class EditViewController: BaseViewController {
         
     }
     
-    private func editContact(contact: Contact) {
-        AFHttp.put(url: AFHttp.API_CONTACT_UPDATE + id!, params: AFHttp.paramsPostUpdate(contact: singleContact), handler: { response in
-            switch response.result {
-                case .success:
-                    self.editCompletion(true)
-                case let .failure(error):
-                    print(error.localizedDescription)
-            }
-        })
-    }
     
 
     //MARK: - Actions...
     
     @IBAction func saveBtnAction(_ sender: Any) {
         singleContact = Contact(title: nameTextField.text!, body: phoneNumberTextField.text!)
+        singleContact.id = id
         editContact(contact: singleContact)
         dismiss(animated: true, completion: nil)
     }

@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 51;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -22,6 +22,9 @@
 		F2E5BA4527BED312007D63E4 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F2E5BA4327BED312007D63E4 /* Main.storyboard */; };
 		F2E5BA4727BED318007D63E4 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F2E5BA4627BED318007D63E4 /* Assets.xcassets */; };
 		F2E5BA4A27BED318007D63E4 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F2E5BA4827BED318007D63E4 /* LaunchScreen.storyboard */; };
+		F2F1EC6D27C1A46100EF9D6C /* HomeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2F1EC6C27C1A46100EF9D6C /* HomeViewModel.swift */; };
+		F2F1EC6F27C1A47100EF9D6C /* CreateViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2F1EC6E27C1A47100EF9D6C /* CreateViewModel.swift */; };
+		F2F1EC7127C1A48000EF9D6C /* EditViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2F1EC7027C1A48000EF9D6C /* EditViewModel.swift */; };
 		F2F2880227BED5AA001A2401 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2F2880027BED5AA001A2401 /* HomeViewController.swift */; };
 		F2F2880327BED5AA001A2401 /* HomeViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F2F2880127BED5AA001A2401 /* HomeViewController.xib */; };
 /* End PBXBuildFile section */
@@ -46,6 +49,9 @@
 		F2E5BA4627BED318007D63E4 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		F2E5BA4927BED318007D63E4 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		F2E5BA4B27BED318007D63E4 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		F2F1EC6C27C1A46100EF9D6C /* HomeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewModel.swift; sourceTree = "<group>"; };
+		F2F1EC6E27C1A47100EF9D6C /* CreateViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateViewModel.swift; sourceTree = "<group>"; };
+		F2F1EC7027C1A48000EF9D6C /* EditViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditViewModel.swift; sourceTree = "<group>"; };
 		F2F2880027BED5AA001A2401 /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; tabWidth = 4; };
 		F2F2880127BED5AA001A2401 /* HomeViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = HomeViewController.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -68,7 +74,6 @@
 				4CF69FEFAC101D11C59B182A /* Pods-PDP_StoryboardContact.debug.xcconfig */,
 				E48B1FE66F54CCE218C09872 /* Pods-PDP_StoryboardContact.release.xcconfig */,
 			);
-			name = Pods;
 			path = Pods;
 			sourceTree = "<group>";
 		};
@@ -121,6 +126,60 @@
 			path = PDP_StoryboardContact;
 			sourceTree = "<group>";
 		};
+		F2F1EC6627C1A3F800EF9D6C /* Home */ = {
+			isa = PBXGroup;
+			children = (
+				F2F1EC6B27C1A45000EF9D6C /* viewmodel */,
+				F2F2880027BED5AA001A2401 /* HomeViewController.swift */,
+				F2F2880127BED5AA001A2401 /* HomeViewController.xib */,
+			);
+			path = Home;
+			sourceTree = "<group>";
+		};
+		F2F1EC6727C1A40200EF9D6C /* Edit */ = {
+			isa = PBXGroup;
+			children = (
+				F2F1EC6927C1A42D00EF9D6C /* viewmodel */,
+				F2C5E60E27C01D4800E9F92E /* EditViewController.swift */,
+				F2C5E60F27C01D4800E9F92E /* EditViewController.xib */,
+			);
+			path = Edit;
+			sourceTree = "<group>";
+		};
+		F2F1EC6827C1A40A00EF9D6C /* Create */ = {
+			isa = PBXGroup;
+			children = (
+				F2F1EC6A27C1A44B00EF9D6C /* viewmodel */,
+				F2C5E60A27C01D3500E9F92E /* CreateViewController.swift */,
+				F2C5E60B27C01D3500E9F92E /* CreateViewController.xib */,
+			);
+			path = Create;
+			sourceTree = "<group>";
+		};
+		F2F1EC6927C1A42D00EF9D6C /* viewmodel */ = {
+			isa = PBXGroup;
+			children = (
+				F2F1EC7027C1A48000EF9D6C /* EditViewModel.swift */,
+			);
+			path = viewmodel;
+			sourceTree = "<group>";
+		};
+		F2F1EC6A27C1A44B00EF9D6C /* viewmodel */ = {
+			isa = PBXGroup;
+			children = (
+				F2F1EC6E27C1A47100EF9D6C /* CreateViewModel.swift */,
+			);
+			path = viewmodel;
+			sourceTree = "<group>";
+		};
+		F2F1EC6B27C1A45000EF9D6C /* viewmodel */ = {
+			isa = PBXGroup;
+			children = (
+				F2F1EC6C27C1A46100EF9D6C /* HomeViewModel.swift */,
+			);
+			path = viewmodel;
+			sourceTree = "<group>";
+		};
 		F2F287FC27BED4E4001A2401 /* Models */ = {
 			isa = PBXGroup;
 			children = (
@@ -142,12 +201,9 @@
 			isa = PBXGroup;
 			children = (
 				F2C5E61227C01ECC00E9F92E /* BaseViewController.swift */,
-				F2F2880027BED5AA001A2401 /* HomeViewController.swift */,
-				F2F2880127BED5AA001A2401 /* HomeViewController.xib */,
-				F2C5E60A27C01D3500E9F92E /* CreateViewController.swift */,
-				F2C5E60B27C01D3500E9F92E /* CreateViewController.xib */,
-				F2C5E60E27C01D4800E9F92E /* EditViewController.swift */,
-				F2C5E60F27C01D4800E9F92E /* EditViewController.xib */,
+				F2F1EC6627C1A3F800EF9D6C /* Home */,
+				F2F1EC6827C1A40A00EF9D6C /* Create */,
+				F2F1EC6727C1A40200EF9D6C /* Edit */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -280,9 +336,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F2F1EC7127C1A48000EF9D6C /* EditViewModel.swift in Sources */,
 				F2C5E61027C01D4800E9F92E /* EditViewController.swift in Sources */,
 				F2C5E60C27C01D3500E9F92E /* CreateViewController.swift in Sources */,
 				F2E5BA3E27BED312007D63E4 /* AppDelegate.swift in Sources */,
+				F2F1EC6F27C1A47100EF9D6C /* CreateViewModel.swift in Sources */,
+				F2F1EC6D27C1A46100EF9D6C /* HomeViewModel.swift in Sources */,
 				F2F2880227BED5AA001A2401 /* HomeViewController.swift in Sources */,
 				F2C5E61C27C03F4800E9F92E /* NetworkService.swift in Sources */,
 				F2C5E61827C021E300E9F92E /* ContactTableViewCell.swift in Sources */,

@@ -9,18 +9,14 @@ import UIKit
 class HomeViewController: BaseViewController, UITableViewDelegate, UITableViewDataSource {
 
     @IBOutlet weak var tableView: UITableView!
-    var contactList: Array<Contact> = Array()
+    
+    var viewModel = HomeViewModel()
     
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
         initViews()
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        getContactList()
-        tableView.reloadData()
     }
 
 
@@ -32,46 +28,19 @@ class HomeViewController: BaseViewController, UITableViewDelegate, UITableViewDa
         tableView.delegate = self
         tableView.dataSource = self
         
-        getContactList()
+        bindViewModel()
+        viewModel.getContactList()
     }
     
-    
-    //Call APIs...
-    public func getContactList() {
-        indicateProgressView()
-        AFHttp.get(url: AFHttp.API_CONTACT_LIST, params: AFHttp.paramsEmpty(), handler: { response in
-            self.hideProgressView()
-            switch response.result {
-                case .success:
-                    let contacts = try! JSONDecoder().decode([Contact].self, from: response.data!)
-                    self.refreshTableView(contacts: contacts)
-            case let .failure(error):
-                print(error.localizedDescription)
-            }
-        })
-    }
-    
-    private func deleteContact(contact: Contact) {
-        indicateProgressView()
-        AFHttp.del(url: AFHttp.API_CONTACT_DELETE + contact.id!, params: AFHttp.paramsEmpty(), handler: {
-            response in
-                self.hideProgressView()
-                switch response.result {
-                    case .success:
-                        self.getContactList()
-                case let .failure(error):
-                    print(error.localizedDescription)
-                }
-        })
-    }
-    
-    private func refreshTableView(contacts: [Contact]) {
-        self.contactList = contacts
-        self.tableView.reloadData()
+    func bindViewModel() {
+        viewModel.controller = self
+        viewModel.items.bind(to: self) { strongSelf, _ in
+            strongSelf.tableView.reloadData()
+        }
     }
 
     private func initNavBar() {
-        title = "Storyboard MVC"
+        title = "Storyboard MVVM"
         let refresh = UIImage(systemName: "arrow.clockwise")
         let add = UIImage(systemName: "text.badge.plus")
         
@@ -91,7 +60,7 @@ class HomeViewController: BaseViewController, UITableViewDelegate, UITableViewDa
         
         vc.editCompletion = { res in
             if res {
-                self.getContactList()
+                self.viewModel.getContactList()
                 self.tableView.reloadData()
             }
         }
@@ -102,7 +71,7 @@ class HomeViewController: BaseViewController, UITableViewDelegate, UITableViewDa
     //MARK: - Actions...
     
     @objc func leftTapped() {
-        getContactList()
+        viewModel.getContactList()
     }
     @objc func rightTapped() {
         callCreateViewController()
@@ -111,11 +80,11 @@ class HomeViewController: BaseViewController, UITableViewDelegate, UITableViewDa
     //MARK: - Table View Methods...
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        contactList.count
+        viewModel.items.value.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let singleContact = contactList[indexPath.row]
+        let singleContact = viewModel.items.value[indexPath.row]
         let cell = Bundle.main.loadNibNamed("ContactTableViewCell", owner: self, options: nil)? .first as! ContactTableViewCell
         
         cell.titleLabel.text = singleContact.title
@@ -127,11 +96,11 @@ class HomeViewController: BaseViewController, UITableViewDelegate, UITableViewDa
     //new ones to me.. and repractice them :)
     
     func tableView(_ tableView: UITableView, leadingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
-        UISwipeActionsConfiguration(actions: [makeCompleteContextualAction(forRowAt: indexPath, contact: contactList[indexPath.row])])
+        UISwipeActionsConfiguration(actions: [makeCompleteContextualAction(forRowAt: indexPath, contact: viewModel.items.value[indexPath.row])])
     }
     
     func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
-        UISwipeActionsConfiguration(actions: [makeDeleteContextualAction(forRowAt: indexPath, contact: contactList[indexPath.row])])
+        UISwipeActionsConfiguration(actions: [makeDeleteContextualAction(forRowAt: indexPath, contact: viewModel.items.value[indexPath.row])])
     }
     
     //MARK: - Contextual Actions...
@@ -140,7 +109,9 @@ class HomeViewController: BaseViewController, UITableViewDelegate, UITableViewDa
         return UIContextualAction(style: .destructive, title: "Delete") { (action, swipeButtonView, completion) in
             print("DELETE :(")
             completion(true)
-            self.deleteContact(contact: contact)
+            self.viewModel.deleteContact(contact: contact, handler: { isDeleted in
+                self.viewModel.getContactList()
+            })
         }
     }
     
