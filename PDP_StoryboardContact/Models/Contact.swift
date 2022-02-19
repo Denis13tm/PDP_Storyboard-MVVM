@@ -5,7 +5,7 @@
 
 import Foundation
 
-struct Contact: Decodable {
+struct Contact: Codable {
     var id: String? = ""
     var title: String? = ""
     var body: String? = ""

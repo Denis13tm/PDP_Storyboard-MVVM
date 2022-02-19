@@ -6,8 +6,11 @@
 //
 
 import UIKit
+import JGProgressHUD
 
 class BaseViewController: UIViewController {
+    
+    let progress = JGProgressHUD()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -21,6 +24,19 @@ class BaseViewController: UIViewController {
     }
     private func sceneDelegate() -> SceneDelegate {
         (UIApplication.shared.connectedScenes.first! .delegate as? SceneDelegate)!
+    }
+    
+    func indicateProgressView() {
+        if !progress.isVisible {
+            progress.textLabel.text = "Loading..."
+            progress.show(in: self.view)
+        }
+    }
+    
+    func hideProgressView() {
+        if progress.isVisible {
+            progress.dismiss()
+        }
     }
 
 }
